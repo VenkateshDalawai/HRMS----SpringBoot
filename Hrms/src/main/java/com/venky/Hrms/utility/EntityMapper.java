@@ -102,8 +102,10 @@ public class EntityMapper {
         }
 
         Attendance attendance = new Attendance();
+        Employee employee = new Employee();
+        employee.setId(attendance.getId());
         attendance.setId(attendanceDTO.getId());
-        attendance.setEmployee(attendance.getEmployee());
+        attendance.setEmployee(employee);
         attendance.setDate(attendanceDTO.getDate());
         attendance.setClockIn(attendanceDTO.getClockIn());
         attendance.setClockOut(attendanceDTO.getClockOut());
