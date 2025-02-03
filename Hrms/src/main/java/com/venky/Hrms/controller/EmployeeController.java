@@ -47,7 +47,7 @@ public class EmployeeController {
     public  ResponseEntity<List<EmployeeDTO>> getAllEmployeeDetails(){
         try {
             List<Employee> employees = employeeService.getAllEmployees();
-            List<EmployeeDTO> employeeDTOSList = EntityMapper.convertList(employees);
+            List<EmployeeDTO> employeeDTOSList = EntityMapper.converttoDTOList(employees);
             return ResponseEntity.ok(employeeDTOSList);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -69,7 +69,7 @@ public class EmployeeController {
     public ResponseEntity<List<EmployeeDTO>> getEmployeeById(@RequestParam("status") Status status){
         try {
             List<Employee> employeeList = employeeService.getEmployeesByStatus(status);
-            List<EmployeeDTO> employeeDTOList = EntityMapper.convertList(employeeList);
+            List<EmployeeDTO> employeeDTOList = EntityMapper.converttoDTOList(employeeList);
             return ResponseEntity.ok(employeeDTOList);
         } catch (Exception e) {
             throw new RuntimeException(e);

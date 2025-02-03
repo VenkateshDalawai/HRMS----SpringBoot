@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public class EntityMapper {
 
 
-    public static <T> List<T> convertList(List<?> sourceList) {
+    public static <T> List<T> converttoDTOList(List<?> sourceList) {
         if (sourceList == null) {
             return null;
         }
@@ -22,10 +22,33 @@ public class EntityMapper {
                     .map(employee -> (Employee) employee)
                     .map(EntityMapper::toDTO)
                     .collect(Collectors.toList());
-        } else if (sourceList instanceof EmployeeDTO) {
+        } else if(sourceList instanceof Attendance){
+            return (List<T>) sourceList.stream()
+                    .filter(Attendance.class::isInstance)
+                    .map(attendance -> (Attendance) attendance)
+                    .map(EntityMapper::toDTO)
+                    .collect(Collectors.toList());
+        } else {
+            return null;
+        }
+
+    }
+
+    public static <T> List<T> converttoEntityList(List<?> sourceList) {
+        if (sourceList == null) {
+            return null;
+        }
+
+        if (sourceList instanceof EmployeeDTO) {
             return (List<T>) sourceList.stream()
                     .filter(EmployeeDTO.class::isInstance)
                     .map(employeeDTO -> (EmployeeDTO) employeeDTO)
+                    .map(EntityMapper::toEntity)
+                    .collect(Collectors.toList());
+        } else if (sourceList instanceof AttendanceDTO) {
+            return (List<T>) sourceList.stream()
+                    .filter(AttendanceDTO.class::isInstance)
+                    .map(attendanceDTO -> (AttendanceDTO) attendanceDTO)
                     .map(EntityMapper::toEntity)
                     .collect(Collectors.toList());
         } else {
@@ -73,14 +96,14 @@ public class EntityMapper {
         return employee;
     }
 
-    public static Attendance toEntity(AttendanceDTO attendanceDTO, Employee employee) {
+    public static Attendance toEntity(AttendanceDTO attendanceDTO) {
         if (attendanceDTO == null) {
             return null;
         }
 
         Attendance attendance = new Attendance();
         attendance.setId(attendanceDTO.getId());
-        attendance.setEmployee(employee); // assuming you have an employee object
+        attendance.setEmployee(attendance.getEmployee());
         attendance.setDate(attendanceDTO.getDate());
         attendance.setClockIn(attendanceDTO.getClockIn());
         attendance.setClockOut(attendanceDTO.getClockOut());
