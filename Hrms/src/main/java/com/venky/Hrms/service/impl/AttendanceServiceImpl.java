@@ -5,9 +5,11 @@ import com.venky.Hrms.entity.Employee;
 import com.venky.Hrms.repository.AttendanceDAO;
 import com.venky.Hrms.repository.EmployeeDAO;
 import com.venky.Hrms.service.AttendanceService;
-import com.venky.Hrms.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Optional;
 
 public class AttendanceServiceImpl implements AttendanceService {
@@ -19,13 +21,15 @@ public class AttendanceServiceImpl implements AttendanceService {
     EmployeeDAO employeeDAO;
 
     @Override
-    public Long saveAtetndance(Attendance attendance) {
+    public Long saveInTime(Attendance attendance) {
         Optional<Employee> employee = employeeDAO.findById(attendance.getEmployee().getId());
         if(employee.isPresent()){
             attendance.setEmployee(employee.get());
         } else {
             return 0L;
         }
+        attendance.setDate(LocalDate.now());
+        attendance.setClockIn(LocalDateTime.now());
         attendanceDAO.save(attendance);
         return attendance.getId();
     }
