@@ -18,12 +18,22 @@ import org.springframework.web.bind.annotation.RestController;
         @Autowired
         AttendanceService attendanceService;
 
-        @PostMapping("/")
+        @PostMapping("/inTime")
         public ResponseEntity<Long> saveInTime(AttendanceDTO attendanceDTO) {
             try {
                 Attendance attendance = EntityMapper.toEntity(attendanceDTO);
                 Long attendanceId = attendanceService.saveInTime(attendance);
                 return ResponseEntity.ok(attendanceId);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        @PutMapping("/outTime")
+        public ResponseEntity<String> saveOutTime(Long empId) {
+            try {
+                String result = attendanceService.saveOutTime(empId);
+                return ResponseEntity.ok(result);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

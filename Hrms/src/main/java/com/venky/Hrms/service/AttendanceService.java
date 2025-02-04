@@ -4,4 +4,6 @@ import com.venky.Hrms.entity.Attendance;
 
 public interface AttendanceService {
     Long saveInTime(Attendance attendance);
+
+    String saveOutTime(Long empId);
 }
