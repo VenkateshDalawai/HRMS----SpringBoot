@@ -75,13 +75,13 @@ public class AttendanceServiceImpl implements AttendanceService {
         if (toDate == null){
             toDate = LocalDate.now();
         }
-        if (searchValue == null){
-            List<Attendance> attendance = attendanceDAO.findAllAttendanceDetails(fromDate,toDate,"id",orderBy);
-            return attendance;
-        } else {
-            List<Attendance> attendances = attendanceDAO.findAllAttendanceDetails(fromDate,toDate,searchValue,orderBy);
-            return attendances;
+        List<String> validSearchFields = List.of("id", "date", "clockIn", "clockOut", "workedHours");
+
+        if (searchValue == null || !validSearchFields.contains(searchValue)) {
+            searchValue = "id";
         }
+        List<Attendance> attendance = attendanceDAO.findAllAttendanceDetails(fromDate,toDate,searchValue,orderBy);
+        return attendance;
     }
 
     @Override
@@ -92,13 +92,14 @@ public class AttendanceServiceImpl implements AttendanceService {
         if (toDate == null){
             toDate = LocalDate.now();
         }
-        if (searchValue == null){
-            List<Attendance> attendance = attendanceDAO.findAttendanceDetailsByEmployeeId(empId, fromDate,toDate,"id",orderBy);
-            return attendance;
-        } else {
-            List<Attendance> attendances = attendanceDAO.findAttendanceDetailsByEmployeeId(empId, fromDate,toDate,searchValue,orderBy);
-            return attendances;
+        List<String> validSearchFields = List.of("id", "date", "clockIn", "clockOut", "workedHours");
+
+        if (searchValue == null || !validSearchFields.contains(searchValue)) {
+            searchValue = "id";
         }
+
+        List<Attendance> attendances = attendanceDAO.findAttendanceDetailsByEmployeeId(empId, fromDate,toDate,searchValue,orderBy);
+        return attendances;
     }
 
 }
