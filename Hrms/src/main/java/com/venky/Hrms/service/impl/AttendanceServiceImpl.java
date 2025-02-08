@@ -7,12 +7,14 @@ import com.venky.Hrms.repository.AttendanceDAO;
 import com.venky.Hrms.repository.EmployeeDAO;
 import com.venky.Hrms.service.AttendanceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+@Service
 public class AttendanceServiceImpl implements AttendanceService {
 
     @Autowired
@@ -44,7 +46,7 @@ public class AttendanceServiceImpl implements AttendanceService {
     public String saveOutTime(Long empId) {
         LocalDate date = LocalDate.now();
 
-        Attendance existingAttendance = attendanceDAO.findByEmployee_id(empId, date);
+        Attendance existingAttendance = attendanceDAO.findByEmployeeIdAndDate(empId, date);
 
         if(existingAttendance != null) {
 

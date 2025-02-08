@@ -7,5 +7,6 @@ import java.time.LocalDate;
 
 public interface AttendanceDAO extends JpaRepository<Attendance,Long> {
 
-    Attendance findByEmployee_id(Long empId, LocalDate date);
+    Attendance findByEmployeeIdAndDate(Long employeeId, LocalDate date);
+
 }
