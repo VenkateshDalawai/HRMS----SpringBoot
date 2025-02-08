@@ -1,5 +1,6 @@
 package com.venky.Hrms.service.impl;
 
+import com.venky.Hrms.dto.AttendanceDTO;
 import com.venky.Hrms.entity.Attendance;
 import com.venky.Hrms.entity.Employee;
 import com.venky.Hrms.globalException.EmployeeNotFoundException;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -62,6 +64,23 @@ public class AttendanceServiceImpl implements AttendanceService {
             return "Updated successfully";
         } else {
             return "Attendance not found for the given employee and date";
+        }
+    }
+
+    @Override
+    public List<Attendance> findAllAttendanceDetails(LocalDate fromDate, LocalDate toDate, String searchValue, String orderBy) {
+        if(fromDate == null){
+            fromDate = LocalDate.now().minusDays(5);
+        }
+        if (toDate == null){
+            toDate = LocalDate.now();
+        }
+        if (searchValue == null){
+            List<Attendance> attendance = attendanceDAO.findAllAttendanceDetails(fromDate,toDate,"id",orderBy);
+            return attendance;
+        } else {
+            List<Attendance> attendances = attendanceDAO.findAllAttendanceDetails(fromDate,toDate,searchValue,orderBy);
+            return attendances;
         }
     }
 

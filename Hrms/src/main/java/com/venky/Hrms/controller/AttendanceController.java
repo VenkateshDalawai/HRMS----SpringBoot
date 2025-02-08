@@ -6,12 +6,12 @@ import com.venky.Hrms.service.AttendanceService;
 import com.venky.Hrms.utility.EntityMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-    @RestController
+import java.time.LocalDate;
+import java.util.List;
+
+@RestController
     @RequestMapping("/Attendance")
     public class AttendanceController {
 
@@ -34,6 +34,17 @@ import org.springframework.web.bind.annotation.RestController;
             try {
                 String result = attendanceService.saveOutTime(empId);
                 return ResponseEntity.ok(result);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        @GetMapping
+        public ResponseEntity<List<AttendanceDTO>> getAllAttendanceDetails(@RequestParam(required = false) LocalDate fromDate,@RequestParam(required = false) LocalDate toDate,@RequestParam(required = false) String searchValue,@RequestParam(required = false,defaultValue = "DESC") String orderBy) {
+            try {
+                List<Attendance> attendanceList = attendanceService.findAllAttendanceDetails(fromDate,toDate,searchValue,orderBy);
+                List<AttendanceDTO> attendanceDTOList = EntityMapper.converttoDTOList(attendanceList);
+                return ResponseEntity.ok(attendanceDTOList);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
