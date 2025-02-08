@@ -2,10 +2,12 @@ package com.venky.Hrms.service;
 
 import com.venky.Hrms.entity.Employee;
 import com.venky.Hrms.enums.Status;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public interface EmployeeService {
 
     Long saveEmployee(Employee employee);

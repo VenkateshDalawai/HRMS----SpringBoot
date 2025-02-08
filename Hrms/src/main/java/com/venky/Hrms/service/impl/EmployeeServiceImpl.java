@@ -5,10 +5,12 @@ import com.venky.Hrms.enums.Status;
 import com.venky.Hrms.repository.EmployeeDAO;
 import com.venky.Hrms.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class EmployeeServiceImpl implements EmployeeService {
 
     @Autowired
@@ -49,7 +51,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Optional<Employee> getEmployeeById(Long id) {
         if(id!=null){
-            Optional<Employee> employee = employeeDAO.findById(id);
+            Optional<Employee> employee = employeeDAO.findByIdAndStatus(id,Status.ACTIVE);
             if(employee.isPresent()){
                 return employee;
             } else {
