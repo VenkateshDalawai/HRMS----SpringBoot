@@ -1,5 +1,6 @@
 package com.venky.Hrms.entity;
 
+import com.venky.Hrms.enums.LeaveStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,5 +23,5 @@ public class LeaveRequest {
     private String leaveType;
     private LocalDate startDate;
     private LocalDate endDate;
-    private String status; // Pending, Approved, Rejected
+    private LeaveStatus status; // Pending, Approved, Rejected
 }
