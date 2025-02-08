@@ -55,7 +55,7 @@ public class AttendanceServiceImpl implements AttendanceService {
             existingAttendance.setClockOut(LocalDateTime.now());
 
             Duration workedDuration = Duration.between(existingAttendance.getClockIn(), existingAttendance.getClockOut());
-            long workedHours = workedDuration.toHours();
+            double workedHours = workedDuration.toHours();
 
             existingAttendance.setWorkedHours(workedHours);
 
@@ -100,6 +100,28 @@ public class AttendanceServiceImpl implements AttendanceService {
 
         List<Attendance> attendances = attendanceDAO.findAttendanceDetailsByEmployeeId(empId, fromDate,toDate,searchValue,orderBy);
         return attendances;
+    }
+
+    @Override
+    public void deleteAttendance(Long attendanceId) {
+        attendanceDAO.deleteById(attendanceId);
+    }
+
+    @Override
+    public String updateAttendance(Long attendanceId, Attendance updatedAttendance) {
+        Optional<Attendance> attendance = attendanceDAO.findById(attendanceId);
+        if(attendance.isPresent()){
+            attendance.get().setDate(updatedAttendance.getDate());
+            attendance.get().setClockIn(updatedAttendance.getClockIn());
+            attendance.get().setClockOut(updatedAttendance.getClockOut());
+            Duration workedDuration = Duration.between(attendance.get().getClockIn(), attendance.get().getClockOut());
+            double workedHours = workedDuration.toHours();
+            attendance.get().setWorkedHours(workedHours);
+            attendanceDAO.save(attendance.get());
+            return "Updated Successfully";
+        } else {
+            return "Error: Attendance record not found.";
+        }
     }
 
 }

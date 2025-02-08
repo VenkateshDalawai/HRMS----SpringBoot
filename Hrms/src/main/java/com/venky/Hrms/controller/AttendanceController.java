@@ -61,5 +61,28 @@ import java.util.List;
             }
         }
 
-
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteAttendance(@PathVariable("id") Long attendanceId) {
+        try {
+            attendanceService.deleteAttendance(attendanceId);
+            return ResponseEntity.ok("Attendance record deleted successfully");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<String> updateAttendance(@PathVariable("id") Long attendanceId, @RequestBody AttendanceDTO attendanceDTO) {
+        try {
+            Attendance updatedAttendance = EntityMapper.toEntity(attendanceDTO);
+            String result = attendanceService.updateAttendance(attendanceId, updatedAttendance);
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
+
+}

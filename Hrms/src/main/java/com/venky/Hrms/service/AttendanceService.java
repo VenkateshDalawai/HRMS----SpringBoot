@@ -16,4 +16,8 @@ public interface AttendanceService {
     List<Attendance> findAllAttendanceDetails(LocalDate fromDate, LocalDate toDate, String searchValue, String orderBy);
 
     List<Attendance> findAttendanceDetailsByEmployeeId(Long empId, LocalDate fromDate, LocalDate toDate, String searchValue, String orderBy);
+
+    void deleteAttendance(Long attendanceId);
+
+    String updateAttendance(Long attendanceId, Attendance updatedAttendance);
 }
