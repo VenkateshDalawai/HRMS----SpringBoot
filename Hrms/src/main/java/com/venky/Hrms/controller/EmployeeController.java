@@ -65,7 +65,7 @@ public class EmployeeController {
         }
     }
 
-    @GetMapping
+    @GetMapping("/byStatus")
     public ResponseEntity<List<EmployeeDTO>> getEmployeeById(@RequestParam("status") Status status){
         try {
             List<Employee> employeeList = employeeService.getEmployeesByStatus(status);
