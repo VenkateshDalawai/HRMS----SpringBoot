@@ -14,4 +14,6 @@ public interface AttendanceService {
     String saveOutTime(Long empId);
 
     List<Attendance> findAllAttendanceDetails(LocalDate fromDate, LocalDate toDate, String searchValue, String orderBy);
+
+    List<Attendance> findAttendanceDetailsByEmployeeId(Long empId, LocalDate fromDate, LocalDate toDate, String searchValue, String orderBy);
 }

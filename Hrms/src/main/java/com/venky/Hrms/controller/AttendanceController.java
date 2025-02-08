@@ -50,5 +50,16 @@ import java.util.List;
             }
         }
 
+        @GetMapping("/{empId}")
+        public ResponseEntity<List<AttendanceDTO>> getAttendanceDetailsByEmployeeId(@PathVariable("empId") Long empId,@RequestParam(required = false) LocalDate fromDate,@RequestParam(required = false) LocalDate toDate,@RequestParam(required = false) String searchValue,@RequestParam(required = false,defaultValue = "DESC") String orderBy) {
+            try {
+                List<Attendance> attendanceList = attendanceService.findAttendanceDetailsByEmployeeId(empId,fromDate,toDate,searchValue,orderBy);
+                List<AttendanceDTO> attendanceDTOList = EntityMapper.converttoDTOList(attendanceList);
+                return ResponseEntity.ok(attendanceDTOList);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+
 
     }

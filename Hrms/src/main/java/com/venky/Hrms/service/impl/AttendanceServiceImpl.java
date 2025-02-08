@@ -84,4 +84,21 @@ public class AttendanceServiceImpl implements AttendanceService {
         }
     }
 
+    @Override
+    public List<Attendance> findAttendanceDetailsByEmployeeId(Long empId, LocalDate fromDate, LocalDate toDate, String searchValue, String orderBy) {
+        if(fromDate == null){
+            fromDate = LocalDate.now().minusDays(5);
+        }
+        if (toDate == null){
+            toDate = LocalDate.now();
+        }
+        if (searchValue == null){
+            List<Attendance> attendance = attendanceDAO.findAttendanceDetailsByEmployeeId(empId, fromDate,toDate,"id",orderBy);
+            return attendance;
+        } else {
+            List<Attendance> attendances = attendanceDAO.findAttendanceDetailsByEmployeeId(empId, fromDate,toDate,searchValue,orderBy);
+            return attendances;
+        }
+    }
+
 }
