@@ -23,5 +23,7 @@ public class LeaveRequest {
     private String leaveType;
     private LocalDate startDate;
     private LocalDate endDate;
+
+    @Enumerated(EnumType.ORDINAL)
     private LeaveStatus status; // Pending, Approved, Rejected
 }
